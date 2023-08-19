@@ -1,1 +1,5 @@
 /logs
+logs
+nodemodules
+.env
+node_modules
