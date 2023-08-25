@@ -1,35 +1,51 @@
-import express from 'express';
-import { academicDepartmentRoutes } from '../modules/academicDepartment/academicDepartment.routes';
-import { academicFacultyRoutes } from '../modules/academicFaculty/academicFaculty.routes';
-import { AcademicSemeterRoutes } from '../modules/academicSemester/academicSemester.routes';
-import { facultyRoutes } from '../modules/faculty/faculty.routes';
-import { studentRoutes } from '../modules/student/student.routes';
+import { FacultyRoutes } from "./../modules/Faculty/Faculty.routes";
+import express from "express";
+import { AcademicSemesterRoutes } from "../modules/AcademicSemester/AcademicSemester.routes";
+import { StudentRoutes } from "../modules/Student/Student.routes";
+import { AcademicDepartmentRoutes } from "../modules/AcademicDepertment/AcademicDepartment.routes";
+import { AcademicFacultyRoutes } from "../modules/AcademicFaculty/AcademicFaculty.routes";
+import { BuildingRoutes } from "../modules/Building/Buildng.routes";
+import { RoomRoutes } from "../modules/Room/Room.routes";
+import { CourseRoutes } from "../modules/Course/Course.routes";
 
 const router = express.Router();
 
 const moduleRoutes = [
-  // ... routes
-  {
-    path: "/academic-semesters",
-    route: AcademicSemeterRoutes
-  },
-  {
-    path: '/academic-faculties',
-    route: academicFacultyRoutes
-  },
-  {
-    path: '/academic-departments',
-    route: academicDepartmentRoutes
-  },
-  {
-    path: '/faculties',
-    route: facultyRoutes
-  },
-  {
-    path: '/students',
-    route: studentRoutes
-  },
+	// ... routes
+	{
+		path: "/academic-semesters",
+		route: AcademicSemesterRoutes,
+	},
+	{
+		path: "/academic-departments",
+		route: AcademicDepartmentRoutes,
+	},
+	{
+		path: "/academic-faculty",
+		route: AcademicFacultyRoutes,
+	},
+	{
+		path: "/student",
+		route: StudentRoutes,
+	},
+	{
+		path: "/faculty",
+		route: FacultyRoutes,
+	},
+	{
+		path: "/building",
+		route: BuildingRoutes,
+	},
+	{
+		path: "/room",
+		route: RoomRoutes,
+	},
+	{
+		path: "/course",
+		route: CourseRoutes,
+	},
 ];
 
-moduleRoutes.forEach(route => router.use(route.path, route.route));
+moduleRoutes.forEach((route) => router.use(route.path, route.route));
 export default router;
+
