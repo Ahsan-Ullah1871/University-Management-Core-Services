@@ -7,6 +7,7 @@ import {
 	AcademicSemester,
 	Building,
 	Course,
+	CourseFaculty,
 	Room,
 } from "@prisma/client";
 import { course_service } from "./Course.service";
@@ -17,15 +18,33 @@ import { paginationFields } from "../../../constants/pagination";
 // Create
 const CourseCreate = catchAsync(async (req: Request, res: Response) => {
 	//
-	const { ...room_data } = req.body;
+	const { ...course_data } = req.body;
 
-	const result = await course_service.create_course(room_data);
+	const result = await course_service.create_course(course_data);
 
 	sendResponse(res, {
 		status_code: httpStatus.OK,
 		success: true,
 		data: result,
 		message: "Course created successfully",
+	});
+});
+
+// Create
+const CourseUpdate = catchAsync(async (req: Request, res: Response) => {
+	//
+	const { ...course_data } = req.body;
+
+	const result = await course_service.update_course(
+		req.params.id,
+		course_data
+	);
+
+	sendResponse(res, {
+		status_code: httpStatus.OK,
+		success: true,
+		data: result,
+		message: "Course updated successfully",
 	});
 });
 
@@ -47,6 +66,7 @@ const GetAllCourses = catchAsync(async (req: Request, res: Response) => {
 		message: "Courses",
 	});
 });
+
 //
 const GetCourse = catchAsync(async (req: Request, res: Response) => {
 	const { id } = req.params;
@@ -62,9 +82,48 @@ const GetCourse = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+//
+const AssignCourse = catchAsync(async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const { ...assign_data } = req.body;
+
+	const result = await course_service.assign_course(
+		assign_data,
+		id as string
+	);
+
+	sendResponse<CourseFaculty[]>(res, {
+		status_code: httpStatus.OK,
+		success: true,
+		data: result,
+		message: "Course Assigned to faculty successfully",
+	});
+});
+
+//
+const RemoveAssignedCourse = catchAsync(async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const { ...assign_data } = req.body;
+
+	const result = await course_service.remove_assign_course(
+		assign_data,
+		id as string
+	);
+
+	sendResponse<CourseFaculty[]>(res, {
+		status_code: httpStatus.OK,
+		success: true,
+		data: result,
+		message: "Course removed from faculty successfully",
+	});
+});
+
 export const CourseController = {
 	CourseCreate,
 	GetAllCourses,
 	GetCourse,
+	CourseUpdate,
+	RemoveAssignedCourse,
+	AssignCourse,
 };
 
