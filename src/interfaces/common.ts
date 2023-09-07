@@ -10,7 +10,7 @@ export type IGenericResponse<T> = {
 };
 
 export type IGenericErrorResponse = {
-	statusCode: number;
+	status_code: number;
 	message: string;
 	errorMessages: generic_error_type[];
 };
